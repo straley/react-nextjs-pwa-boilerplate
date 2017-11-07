@@ -93,9 +93,7 @@ const styles = theme => ({
 
 type MenuNaviationButtonProps = {label:string, href:string};
 
-class MenuNavigationButton extends React.Component {
-  props:MenuNaviationButtonProps;
-
+class MenuNavigationButton extends React.Component<MenuNaviationButtonProps> {
   navigate() {
     window.location = this.props.href;
   }
@@ -116,9 +114,7 @@ class MenuNavigationButton extends React.Component {
   }
 }
 
-class Layout extends React.Component {
-  props:{classes:Object};
-
+class Layout extends React.Component<{classes:Object}, {menuOpen:boolean}> {
   state:{menuOpen:boolean} = {
     menuOpen: false
   };

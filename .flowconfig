@@ -1,0 +1,14 @@
+[ignore]
+.*/.c9/.*
+.*/node_modules/config-chain/test/broken.json
+.*/node_modules/jss/.*
+.*/node_modules/material-ui/.*
+
+[include]
+
+[libs]
+types/
+
+[options]
+module.ignore_non_literal_requires=true
+suppress_comment=// $FlowFixMe

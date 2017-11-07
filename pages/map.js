@@ -38,7 +38,7 @@ const styles = theme => ({
 
 export default withRoot((withTheme()(withStyles(styles)(geolocated({
   positionOptions: {
-    enableHighAccuracy: true,
+    enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
 })(MapPage)))));

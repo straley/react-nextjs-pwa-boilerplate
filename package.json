@@ -12,8 +12,13 @@
     "react-geolocated": "^2.2.1"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "next -p $PORT -H $IP",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "flow": "./node_modules/flow-bin/cli.js"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.21.0",
+    "flow-typed": "^2.2.3"
   }
 }
