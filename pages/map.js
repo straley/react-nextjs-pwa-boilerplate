@@ -15,7 +15,7 @@ const UserLocationMarker = (props:{lat:number, lng:number}) => (
 );
 
 
-const MapPage = (props:{classes:Object}) => (
+const MapPage = (props:{classes:Object, coords:{latitude: number, longitude: number}}) => (
   <Layout>
     <GoogleMapReact
       bootstrapURLKeys={{key: "AIzaSyAJU4lTS2jKN-0NKs2M6CRiMDmFBPzncKg"}}

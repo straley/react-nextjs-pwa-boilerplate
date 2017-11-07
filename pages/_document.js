@@ -6,6 +6,46 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import getContext from '../styles/getContext';
 
 class MyDocument extends Document {
+
+  static getInitialProps = ctx => {
+    // Resolution order
+    //
+    // On the server:
+    // 1. page.getInitialProps
+    // 2. document.getInitialProps
+    // 3. page.render
+    // 4. document.render
+    //
+    // On the server with error:
+    // 2. document.getInitialProps
+    // 3. page.render
+    // 4. document.render
+    //
+    // On the client
+    // 1. page.getInitialProps
+    // 3. page.render
+  
+    // Get the context to collected side effects.
+    const context = getContext();
+    const page = ctx.renderPage(Component => props => (
+      <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
+        <Component {...props} />
+      </JssProvider>
+    ));
+  
+    return {
+      ...page,
+      stylesContext: context,
+      styles: (
+        <style
+          id="jss-server-side"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: context.sheetsRegistry.toString() }}
+        />
+      ),
+    };
+  };
+  
   render() {
     return (
       <html lang="en" dir="ltr">
@@ -40,44 +80,5 @@ class MyDocument extends Document {
     );
   }
 }
-
-MyDocument.getInitialProps = ctx => {
-  // Resolution order
-  //
-  // On the server:
-  // 1. page.getInitialProps
-  // 2. document.getInitialProps
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the server with error:
-  // 2. document.getInitialProps
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the client
-  // 1. page.getInitialProps
-  // 3. page.render
-
-  // Get the context to collected side effects.
-  const context = getContext();
-  const page = ctx.renderPage(Component => props => (
-    <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
-      <Component {...props} />
-    </JssProvider>
-  ));
-
-  return {
-    ...page,
-    stylesContext: context,
-    styles: (
-      <style
-        id="jss-server-side"
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: context.sheetsRegistry.toString() }}
-      />
-    ),
-  };
-};
 
 export default MyDocument;

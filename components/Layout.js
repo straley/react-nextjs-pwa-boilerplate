@@ -91,9 +91,15 @@ const styles = theme => ({
   },
 });
 
-type MenuNaviationButtonProps = {label:string, href:string};
+type MenuNaviationButtonProps = {
+  label:string, 
+  href:string, 
+};
 
 class MenuNavigationButton extends React.Component<MenuNaviationButtonProps> {
+  
+  onClick: Function;
+
   navigate() {
     window.location = this.props.href;
   }
@@ -114,13 +120,13 @@ class MenuNavigationButton extends React.Component<MenuNaviationButtonProps> {
   }
 }
 
-class Layout extends React.Component<{classes:Object}, {menuOpen:boolean}> {
+class Layout extends React.Component<{classes:Object, theme:Object, children:any}, {menuOpen:boolean}> {
   state:{menuOpen:boolean} = {
     menuOpen: false
   };
 
   handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen });
+    this.setState({ menuOpen: !this.state.menuOpen });
   };
 
   render() {
@@ -156,7 +162,7 @@ class Layout extends React.Component<{classes:Object}, {menuOpen:boolean}> {
             <Drawer
               type="temporary"
               anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={this.state.mobileOpen}
+              open={this.state.menuOpen}
               classes={{
                 paper: classes.drawerPaper,
               }}

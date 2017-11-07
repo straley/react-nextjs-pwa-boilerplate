@@ -18,6 +18,7 @@
     "flow": "./node_modules/flow-bin/cli.js"
   },
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.21.0",
     "flow-typed": "^2.2.3"
   }
