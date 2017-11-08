@@ -1,6 +1,9 @@
 /* @flow */
 import * as React from 'react';
 
+import Link from 'next/link';
+import Router from 'next/router';
+
 import { withStyles, withTheme } from 'material-ui/styles';
 import { createMuiTheme } from 'material-ui/styles';
 import purple from 'material-ui/colors/purple';
@@ -20,6 +23,8 @@ import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 
 import withRoot from '../components/withRoot';
+
+import Login from './Login';
 
 const theme = createMuiTheme({
   palette: {
@@ -94,49 +99,61 @@ const styles = theme => ({
 type MenuNaviationButtonProps = {
   label:string, 
   href:string, 
+  onClick?:Function
 };
 
 class MenuNavigationButton extends React.Component<MenuNaviationButtonProps> {
   
-  onClick: Function;
-
-  navigate() {
-    window.location = this.props.href;
-  }
-
   constructor(props:MenuNaviationButtonProps) {
     super();
-    this.onClick = this.navigate.bind(this);
   }
 
   render() {
-    const { label } = this.props;
+    const { label, href } = this.props;
 
     return (
-      <ListItem button onClick={this.onClick}>
-        <ListItemText primary={label}/>
-      </ListItem>
+      <Link href={href} prefetch>
+        <ListItem button>
+          <ListItemText primary={label}/>
+        </ListItem>
+      </Link>
     );
   }
 }
 
-class Layout extends React.Component<{classes:Object, theme:Object, children:any}, {menuOpen:boolean}> {
-  state:{menuOpen:boolean} = {
-    menuOpen: false
+type LayoutProps = {classes:Object, theme:Object, children:any};
+type LayoutState = {menuOpen:boolean, userCredentials:?Object};
+
+class Layout extends React.Component<LayoutProps, LayoutState> {
+  state:LayoutState = {
+    menuOpen: false,
+    userCredentials:{},
   };
 
   handleDrawerToggle = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   };
+  
+  closeDrawer = () => {
+    this.setState({ menuOpen: false });
+  }
+  
+  constructor(props) {
+    super();
+    Router.onRouteChangeStart = (url) => {
+      this.closeDrawer();
+    }    
+  }
 
   render() {
     const { classes, theme } = this.props;
+    const { userCredentials } = this.state;
 
     const drawer = (
       <div>
-        <MenuNavigationButton label="Home" href="/"/>
-        <MenuNavigationButton label="About" href="/about"/>
-        <MenuNavigationButton label="Map" href="/map"/>
+        <MenuNavigationButton label="Home" href="/" />
+        <MenuNavigationButton label="About" href="/about" />
+        <MenuNavigationButton label="Map" href="/map" />
       </div>
     );
 
@@ -186,6 +203,16 @@ class Layout extends React.Component<{classes:Object, theme:Object, children:any
             </Drawer>
           </Hidden>
           <main className={classes.content}>
+            <Login 
+              visible={!(userCredentials && userCredentials.google)} 
+              onSuccess={(credentials) => {
+                console.log("credentials", credentials);
+                this.setState({userCredentials: {google: credentials}});
+              }}
+              onFailure={(message) => {
+                console.log("message", message);
+              }}
+            /> 
             {this.props.children}
           </main>
         </div>

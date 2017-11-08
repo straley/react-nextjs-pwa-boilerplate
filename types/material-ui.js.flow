@@ -13,3 +13,7 @@ declare module 'material-ui/List' { declare module.exports: any; }
 declare module 'material-ui/Hidden' { declare module.exports: any; }
 declare module 'material-ui/Divider' { declare module.exports: any; }
 declare module 'material-ui/styles/createGenerateClassName' { declare module.exports: any; }
+declare module 'material-ui/Dialog' { declare module.exports: any; }
+declare module 'material-ui/DialogContent' { declare module.exports: any; }
+declare module 'material-ui/DialogContentText' { declare module.exports: any; }
+declare module 'material-ui/DialogTitle' { declare module.exports: any; }

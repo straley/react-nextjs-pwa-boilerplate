@@ -9,12 +9,13 @@
     "next": "^4.1.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-geolocated": "^2.2.1"
+    "react-geolocated": "^2.2.1",
+    "react-google-login": "^3.0.2"
   },
   "scripts": {
     "dev": "next -p $PORT -H $IP",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT -H $IP",
     "flow": "./node_modules/flow-bin/cli.js"
   },
   "devDependencies": {
