@@ -58,6 +58,7 @@ const styles = theme => ({
 });
 
 type LoginProps = {
+  googleOauthClientId?: string,
   classes:Object, 
   theme:Object,
   visible: ?boolean,
@@ -66,6 +67,7 @@ type LoginProps = {
 };
 
 class Login extends React.Component<LoginProps> {
+  
   render() {
     const { classes, theme, onSuccess, onFailure, visible } = this.props;
     
@@ -77,7 +79,7 @@ class Login extends React.Component<LoginProps> {
             Welcome to our site.  Please sign in.
             <GoogleLogin
               className={classes.googleLogin}
-              clientId="google-auth-id-goes-here"
+              clientId=""
               onSuccess={
                 (response) => {
                   if (typeof onSuccess !== "function") {
